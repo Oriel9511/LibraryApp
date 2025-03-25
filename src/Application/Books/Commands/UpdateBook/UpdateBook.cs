@@ -18,10 +18,12 @@ public record UpdateBookCommand : IRequest
 public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAppLogger _logger;
 
-    public UpdateBookCommandHandler(IApplicationDbContext context)
+    public UpdateBookCommandHandler(IApplicationDbContext context, IAppLogger logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task Handle(UpdateBookCommand request, CancellationToken cancellationToken)
@@ -41,5 +43,6 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand>
         entity.Stock = request.Stock;
         
         await _context.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation("Book {ISBN} Updated", entity.ISBN ?? "");
     }
 }

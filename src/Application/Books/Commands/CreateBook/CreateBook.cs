@@ -19,10 +19,12 @@ public record CreateBookCommand : IRequest<int>
 public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IAppLogger _logger;
 
-    public CreateBookCommandHandler(IApplicationDbContext context)
+    public CreateBookCommandHandler(IApplicationDbContext context, IAppLogger logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -42,6 +44,8 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
         _context.Books.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
+        
+        _logger.LogInformation("Book {ISBN} Created", entity.ISBN ?? "");
 
         return entity.Id;
     }
