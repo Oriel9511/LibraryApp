@@ -36,10 +36,10 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.Property(t => t.Stock)
             .IsRequired();
 
-        builder.HasOne(b => b.Author)
-            .WithMany()
-            .HasForeignKey(b => b.AuthorId)
-            .OnDelete(DeleteBehavior.Restrict);
+        // builder.HasOne(b => b.Author)
+        //     .WithMany()
+        //     .HasForeignKey(b => b.AuthorId)
+        //     .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(b => b.Genre)
             .WithMany()
