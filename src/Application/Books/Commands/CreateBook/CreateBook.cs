@@ -1,0 +1,48 @@
+﻿using LibraryApp.Application.Common.Interfaces;
+using LibraryApp.Domain.Entities;
+using LibraryApp.Domain.Events;
+
+namespace LibraryApp.Application.Books.Commands.CreateBook;
+
+public record CreateBookCommand : IRequest<int>
+{
+    public string? Title { get; init; }
+    public string? Resume { get; init; }
+    public int PublicationYear { get; init; }
+    public string? ImageUrl { get; init; }
+    public int AuthorId { get; init; }
+    public int GenreId { get; init; }
+    public string? ISBN { get; init; }
+    public int Stock { get; init; }
+}
+
+public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
+{
+    private readonly IApplicationDbContext _context;
+
+    public CreateBookCommandHandler(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+    {
+        var entity = new Book()
+        {
+            Title = request.Title,
+            PublicationYear = request.PublicationYear,
+            Resume = request.Resume,
+            ImageUrl = request.ImageUrl,
+            AuthorId = request.AuthorId,
+            GenreId = request.GenreId,
+            ISBN = request.ISBN,
+            Stock = request.Stock,
+        };
+
+        _context.Books.Add(entity);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return entity.Id;
+    }
+}
