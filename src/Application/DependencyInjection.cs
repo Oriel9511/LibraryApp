@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using LibraryApp.Application.Common.Behaviours;
+using LibraryApp.Application.Common.Models;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -7,8 +8,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+        // services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(typeof(BaseDto<,>).Assembly);
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddMediatR(cfg => {
