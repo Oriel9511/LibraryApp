@@ -4,7 +4,7 @@ using LibraryApp.Domain.Entities;
 
 namespace LibraryApp.Application.Common.Models.Books;
 
-public class BookDto : BaseDto<Book, BookDto>
+public class BookDto : BaseDto
 {
     public string? Title { get; set; }
     public string? Resume { get; set; }
@@ -16,6 +16,14 @@ public class BookDto : BaseDto<Book, BookDto>
     public int Stock { get; set; }
     public virtual AuthorDto Author { get; set; } = new AuthorDto();
     public virtual GenreDto Genre { get; set; } = new GenreDto();
+    
+    private class Mapping : Profile
+    {
+        public Mapping()
+        {
+            CreateMap<Book, BookDto>();
+        }
+    }
 }
 
 

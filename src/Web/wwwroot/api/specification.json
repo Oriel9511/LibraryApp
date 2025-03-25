@@ -1240,7 +1240,7 @@
       "AuthorDto": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/BaseDtoOfAuthorAndAuthorDto"
+            "$ref": "#/components/schemas/BaseDto"
           },
           {
             "type": "object",
@@ -1271,7 +1271,7 @@
       "BookDto": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/BaseDtoOfBookAndBookDto"
+            "$ref": "#/components/schemas/BaseDto"
           },
           {
             "type": "object",
@@ -1322,7 +1322,7 @@
       "GenreDto": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/BaseDtoOfGenreAndGenreDto"
+            "$ref": "#/components/schemas/BaseDto"
           },
           {
             "type": "object",
@@ -1346,27 +1346,7 @@
           }
         ]
       },
-      "BaseDtoOfGenreAndGenreDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "BaseDtoOfBookAndBookDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "BaseDtoOfAuthorAndAuthorDto": {
+      "BaseDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
