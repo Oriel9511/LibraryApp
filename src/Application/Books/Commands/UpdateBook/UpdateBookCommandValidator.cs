@@ -13,6 +13,7 @@ public class UpdateBookCommandValidator : AbstractValidator<UpdateBookCommand>
         RuleFor(v => v.PublicationYear)
             .GreaterThan(0);
         RuleFor(v => v.ISBN)
+            .MaximumLength(13)
             .NotEmpty();
     }
 }

@@ -10,6 +10,6 @@ public class Book : BaseAuditableEntity
     public int GenreId { get; set; }
     public string? ISBN { get; set; }
     public int Stock { get; set; }
-    public virtual Author Author { get; set; } = new Author();
-    public virtual Genre Genre { get; set; } = new Genre();
+    public virtual Author? Author { get; set; }
+    public virtual Genre? Genre { get; set; }
 }
