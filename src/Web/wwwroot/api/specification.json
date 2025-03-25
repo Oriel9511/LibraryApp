@@ -1348,6 +1348,10 @@
           "birthday": {
             "type": "string",
             "format": "date-time"
+          },
+          "totalPublishedBooks": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
