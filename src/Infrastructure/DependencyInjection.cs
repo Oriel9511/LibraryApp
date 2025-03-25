@@ -35,8 +35,7 @@ public static class DependencyInjection
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<ApplicationDbContextInitialiser>();
-    
-        // services.AddSingleton<IJwtTokenService, JwtTokenService>();
+        
         
         // services.AddAuthentication()
         //     .AddBearerToken(IdentityConstants.BearerScheme);
@@ -65,6 +64,8 @@ public static class DependencyInjection
             .AddBearerToken(IdentityConstants.BearerScheme);
         
         services.AddAuthorizationBuilder();
+
+        services.AddScoped<IJwtService, JwtService>();
 
         services
             .AddIdentityCore<ApplicationUser>()
