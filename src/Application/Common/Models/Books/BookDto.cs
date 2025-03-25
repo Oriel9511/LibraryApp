@@ -14,8 +14,8 @@ public class BookDto : BaseDto
     public int GenreId { get; set; }
     public string? ISBN { get; set; }
     public int Stock { get; set; }
-    public virtual AuthorDto Author { get; set; } = new AuthorDto();
-    public virtual GenreDto Genre { get; set; } = new GenreDto();
+    public AuthorBasicDto? Author { get; set; }
+    public GenreBasicDto? Genre { get; set; }
     
     private class Mapping : Profile
     {

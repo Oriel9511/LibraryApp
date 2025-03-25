@@ -2,6 +2,7 @@
 using LibraryApp.Application.Common.Mappings;
 using LibraryApp.Application.Common.Models;
 using LibraryApp.Application.Common.Models.Books;
+using LibraryApp.Domain.Entities;
 
 namespace LibraryApp.Application.Books.Queries.GetBooksWithPagination;
 
@@ -25,8 +26,11 @@ public class GetBooksWithPaginationQueryHandler : IRequestHandler<GetBooksWithPa
     public async Task<PaginatedList<BookDto>> Handle(GetBooksWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.Books
+            .Include(b => b.Genre)
+            .Include(b => b.Author)
             .OrderBy(x => x.Title)
-            .ProjectTo<BookDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ProjectTo<BookDto>(_mapper.ConfigurationProvider, new { MaxDepth = 1 })
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }
