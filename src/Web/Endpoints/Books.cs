@@ -14,12 +14,18 @@ public class Books : EndpointGroupBase
         app.MapGroup(this)
             .RequireAuthorization()
             .MapGet(GetBooksWithPagination)
+            .MapGet(GetFilteredBooks, "filter")
             .MapPost(CreateBook)
             .MapPut(UpdateBook, "{id}")
             .MapDelete(DeleteBook, "{id}");
     }
 
     public Task<PaginatedList<BookDto>> GetBooksWithPagination(ISender sender, [AsParameters] GetBooksWithPaginationQuery query)
+    {
+        return sender.Send(query);
+    }
+    
+    public Task<PaginatedList<BookBasicDto>> GetFilteredBooks(ISender sender, [AsParameters] GetFilteredBooksQuery query)
     {
         return sender.Send(query);
     }

@@ -25,12 +25,23 @@ public class GetFilteredBooksQueryHandler : IRequestHandler<GetFilteredBooksQuer
 
     public async Task<PaginatedList<BookBasicDto>> Handle(GetFilteredBooksQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Books
+        var query = _context.Books
             .Include(b => b.Genre)
             .Include(b => b.Author)
+            .AsNoTracking();
+
+        if (!string.IsNullOrEmpty(request.Filter))
+        {
+            query = query.Where(b => 
+                b.Title!.Contains(request.Filter) ||
+                b.ISBN!.Contains(request.Filter) ||
+                b.Author!.Name!.Contains(request.Filter) ||
+                b.Genre!.Name!.Contains(request.Filter));
+        }
+
+        return await query
             .OrderBy(x => x.Title)
-            .AsNoTracking()
-            .ProjectTo<BookBasicDto>(_mapper.ConfigurationProvider, new { MaxDepth = 1 })
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+            .ProjectTo<BookBasicDto>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);    
     }
 }

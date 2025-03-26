@@ -242,6 +242,62 @@
         ]
       }
     },
+    "/api/Books/filter": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "operationId": "GetFilteredBooks",
+        "parameters": [
+          {
+            "name": "Filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfBookBasicDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/api/Books/{id}": {
       "put": {
         "tags": [
@@ -1108,6 +1164,81 @@
             "type": "boolean"
           }
         }
+      },
+      "PaginatedListOfBookBasicDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookBasicDto"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookBasicDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "string",
+                "nullable": true
+              },
+              "resume": {
+                "type": "string",
+                "nullable": true
+              },
+              "publicationYear": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "imageUrl": {
+                "type": "string",
+                "nullable": true
+              },
+              "isbn": {
+                "type": "string",
+                "nullable": true
+              },
+              "stock": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "author": {
+                "type": "string",
+                "nullable": true
+              },
+              "genre": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        ]
       },
       "CreateBookCommand": {
         "type": "object",
