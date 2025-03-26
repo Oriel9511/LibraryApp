@@ -4,5 +4,5 @@ namespace LibraryApp.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
 {
-    public bool Active { get; set; }
+    public bool Active { get; set; } = true;
 }
