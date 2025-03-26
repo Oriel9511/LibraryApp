@@ -22,14 +22,6 @@ Before you can run the application, you need to have the following software inst
 - .NET 8.0 SDK
 - SQL Server (or Docker to run SQL Server in a container)
 
-## Running the Database
-
-The database for this application runs in SQL Server. You can use a local SQL Server instance or run it in a Docker container:
-
-```bash
-docker-compose up
-```
-
 ## Building and Running the Application
 
 Once you have set up your environment, follow these steps to build and run the application:
@@ -41,25 +33,31 @@ git clone https://github.com/Oriel9511/LibraryApp.git
 cd LibraryApp
 ```
 
-2. **Build the application**:
+2. **Run the database**:
+
+The database for this application runs in SQL Server. You can use a local SQL Server instance or run it in a Docker container:
+
+```bash
+docker-compose up -d
+```
+
+3. **Add the user secrets to the Web project**
+
+Use the example.secrets.json file as reference
+
+4. **Build the application**:
 
 ```bash
 dotnet build -tl
 ```
 
-3. **Run the tests**:
+4. **Run the tests**:
 
 ```bash
 dotnet test
 ```
 
-4. **Apply database migrations**:
-
-```bash
-dotnet ef database update --project src\Infrastructure --startup-project src\Web
-```
-
-5. **Run the application**:
+6. **Run the application**:
 
 ```bash
 dotnet watch run
