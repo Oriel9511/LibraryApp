@@ -1,5 +1,6 @@
 ﻿using System.Security.Authentication;
 using LibraryApp.Application.User.Commands.GetJwt;
+using LibraryApp.Application.User.Commands.Register;
 using LibraryApp.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,8 @@ public class Users : EndpointGroupBase
         app.MapGroup(this)
             .AllowAnonymous()
             .MapPost(GetJwt, "GetJwt")
-            .MapIdentityApi<ApplicationUser>();
+            .MapPost(RegisterUser, "Register");
+        // .MapIdentityApi<ApplicationUser>();
     }
 
     public async Task<IResult> GetJwt(ISender sender, [FromBody] GetJwtCommand command)
@@ -29,5 +31,11 @@ public class Users : EndpointGroupBase
         {
             return Results.Unauthorized();
         }
+    }
+    
+    public async Task<IResult> RegisterUser(ISender sender, [FromBody] RegisterCommand command)
+    {
+        var result = await sender.Send(command);
+        return Results.Ok(result);
     }
 }
