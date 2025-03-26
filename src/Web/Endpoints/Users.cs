@@ -36,7 +36,7 @@ public class Users : EndpointGroupBase
     public async Task<IResult> RegisterUser(ISender sender, [FromBody] RegisterCommand command)
     {
         var result = await sender.Send(command);
-        if (result.Result.Succeeded) return Results.Ok();
+        if (result != null) return Results.Ok();
         return Results.BadRequest("Failed to register user. Verify the password is strong enough.");
     }
 }
