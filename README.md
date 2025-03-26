@@ -60,14 +60,14 @@ dotnet test
 6. **Run the application**:
 
 ```bash
-dotnet watch run
+dotnet watch run --project src\Web
 ```
 
 After running the application, you should see output indicating that the application is running. The API will be available at https://localhost:5001.
 
 ## Accessing the API Documentation
 
-Once the application is running, you can access the API documentation by opening a web browser and navigating to https://localhost:5001/swagger/index.html.
+Once the application is running, you can access the API documentation by opening a web browser and navigating to https://localhost:5001/api/index.html?url=/api/specification.json#/.
 
 ## Application Structure
 
