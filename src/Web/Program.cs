@@ -4,6 +4,8 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddUserSecrets<Program>();
+
 // Add services to the container.
 builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 

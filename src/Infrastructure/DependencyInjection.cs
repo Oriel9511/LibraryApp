@@ -11,7 +11,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using LibraryApp.Infrastructure.Configuration;
 using LibraryApp.Infrastructure.Logging;
+using LibraryApp.Infrastructure.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -77,7 +79,12 @@ public static class DependencyInjection
         services.AddSingleton(TimeProvider.System);
         services.AddTransient<IIdentityService, IdentityService>();
         
+        //Logging
         services.AddTransient<IAppLogger, SerilogLogger>();
+        
+        //SMTP
+        services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
+        services.AddTransient<IEmailService, EmailService>();
 
         services.AddAuthorization(options =>
             options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));

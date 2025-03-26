@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>LibraryApp.Web</RootNamespace>
     <AssemblyName>LibraryApp.Web</AssemblyName>
+    <UserSecretsId>54b743a8-a503-41c6-afe5-2dc4c82a2b2a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
