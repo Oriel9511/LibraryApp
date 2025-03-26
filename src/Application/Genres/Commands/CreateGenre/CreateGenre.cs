@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Application.Common.Interfaces;
 using LibraryApp.Domain.Entities;
 using LibraryApp.Domain.Events;
+using LibraryApp.Domain.Events.Genres;
 
 namespace LibraryApp.Application.Genres.Commands.CreateGenre;
 
@@ -30,6 +31,8 @@ public class CreateGenreCommandHandler : IRequestHandler<CreateGenreCommand, int
         _context.Genres.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
+        
+        entity.AddDomainEvent(new GenreCreateEvent(entity));
 
         return entity.Id;
     }

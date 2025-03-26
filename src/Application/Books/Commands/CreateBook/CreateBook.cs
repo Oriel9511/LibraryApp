@@ -1,6 +1,6 @@
 ﻿using LibraryApp.Application.Common.Interfaces;
 using LibraryApp.Domain.Entities;
-using LibraryApp.Domain.Events;
+using LibraryApp.Domain.Events.Books;
 
 namespace LibraryApp.Application.Books.Commands.CreateBook;
 
@@ -45,7 +45,7 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, int>
 
         await _context.SaveChangesAsync(cancellationToken);
         
-        _logger.LogInformation("Book {ISBN} Created", entity.ISBN ?? "");
+        entity.AddDomainEvent(new BookCreatedEvent(entity));
 
         return entity.Id;
     }

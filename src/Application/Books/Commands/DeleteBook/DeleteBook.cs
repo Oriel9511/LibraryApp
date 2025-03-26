@@ -1,5 +1,5 @@
 ﻿using LibraryApp.Application.Common.Interfaces;
-using LibraryApp.Domain.Events;
+using LibraryApp.Domain.Events.Books;
 
 namespace LibraryApp.Application.Books.Commands.DeleteBook;
 
@@ -27,7 +27,7 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand>
 
         await _context.SaveChangesAsync(cancellationToken);
         
-        _logger.LogInformation("Book {ISBN} Deleted", entity.ISBN ?? "");
+        entity.AddDomainEvent(new BookDeletedEvent(entity));
     }
 
 }

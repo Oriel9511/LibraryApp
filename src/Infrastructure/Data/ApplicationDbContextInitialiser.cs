@@ -89,20 +89,106 @@ public class ApplicationDbContextInitialiser
 
         // Default data
         // Seed, if necessary
-        if (!_context.TodoLists.Any())
+        if (!_context.Authors.Any())
         {
-            _context.TodoLists.Add(new TodoList
+            var horrorGenre = new Genre()
             {
-                Title = "Todo List",
-                Items =
+                Name = "Horror",
+                Description = "Fiction designed to frighten and unsettle"
+            };
+
+            var magicalRealismGenre = new Genre()
+            {
+                Name = "Magical Realism",
+                Description = "A style of fiction that paints a realistic view of the world while also adding magical elements"
+            };
+
+            var fantasyGenre = new Genre()
+            {
+                Name = "Fantasy",
+                Description = "Fiction involving magical and supernatural elements"
+            };
+
+            _context.Authors.Add(new Author()
+            {
+                Name = "Stephen King",
+                Nationality = "American",
+                Birthday = new DateTime(1947, 9, 21),
+                Books = 
                 {
-                    new TodoItem { Title = "Make a todo list 📃" },
-                    new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
-                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
+                    new Book()
+                    {
+                        Title = "The Shining", 
+                        Resume = "A family becomes caretakers of an isolated hotel for the winter where a sinister presence influences the father into violence.", 
+                        Genre = horrorGenre,
+                        PublicationYear = 1977,
+                        ISBN = "978-030774",
+                        Stock = 10,
+                        ImageUrl = "the-shining.jpg",
+                    },
+                    new Book()
+                    {
+                        Title = "It", 
+                        Resume = "Seven adults return to their hometown to confront a nightmare they first stumbled on as teenagers.", 
+                        Genre = horrorGenre,
+                        PublicationYear = 1986,
+                        ISBN = "978-150114",
+                        Stock = 8,
+                        ImageUrl = "it.jpg",
+                    }
                 }
             });
 
+            _context.Authors.Add(new Author()
+            {
+                Name = "Gabriel García Márquez",
+                Nationality = "Colombian",
+                Birthday = new DateTime(1927, 3, 6),
+                Books = 
+                {
+                    new Book()
+                    {
+                        Title = "One Hundred Years of Solitude", 
+                        Resume = "The multi-generational story of the Buendía family in the fictional town of Macondo.", 
+                        Genre = magicalRealismGenre,
+                        PublicationYear = 1967,
+                        ISBN = "978-006088",
+                        Stock = 15,
+                        ImageUrl = "hundred-years-solitude.jpg",
+                    }
+                }
+            });
+
+            _context.Authors.Add(new Author()
+            {
+                Name = "J.K. Rowling",
+                Nationality = "British",
+                Birthday = new DateTime(1965, 7, 31),
+                Books = 
+                {
+                    new Book()
+                    {
+                        Title = "Harry Potter and the Philosopher's Stone", 
+                        Resume = "An orphaned boy learns he is a wizard and begins his journey at Hogwarts School of Witchcraft and Wizardry.", 
+                        Genre = fantasyGenre,
+                        PublicationYear = 1997,
+                        ISBN = "978-074753",
+                        Stock = 20,
+                        ImageUrl = "harry-potter-1.jpg",
+                    },
+                    new Book()
+                    {
+                        Title = "Harry Potter and the Chamber of Secrets", 
+                        Resume = "Harry's second year at Hogwarts is threatened by a mysterious force that is attacking students.", 
+                        Genre = fantasyGenre,
+                        PublicationYear = 1998,
+                        ISBN = "978-074753",
+                        Stock = 18,
+                        ImageUrl = "harry-potter-2.jpg",
+                    }
+                }
+            });
+            
             await _context.SaveChangesAsync();
         }
     }
