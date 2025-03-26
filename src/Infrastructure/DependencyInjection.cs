@@ -21,9 +21,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("SqlDbConnectionLocal");
+        var connectionString = configuration.GetConnectionString("SqlDbConnectionContainer");
 
-        Guard.Against.Null(connectionString, message: "Connection string 'SqlDbConnectionLocal' not found.");
+        Guard.Against.Null(connectionString, message: "Connection string 'SqlDbConnectionContainer' not found.");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();

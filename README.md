@@ -1,58 +1,113 @@
-﻿# LibraryApp
+﻿# LibraryApp - Digital Library Management System
 
-The project was generated using the [Clean.Architecture.Solution.Template](https://github.com/jasontaylordev/LibraryApp) version 8.0.5.
+This document provides a step-by-step guide on how to run the LibraryApp API from the command line.
 
-## Build
+## Overview
 
-Run `dotnet build -tl` to build the solution.
+LibraryApp is a digital library management system that allows users to explore and manage books, authors, and genres. The application provides a RESTful API with JWT authentication and uses Entity Framework Core for data persistence.
 
-## Run
+## Key Features
 
-To run the web application:
+- Complete CRUD operations for books, authors, and genres
+- User authentication and authorization using JWT
+- Search and filter capabilities for books
+- Relationship management between books, authors, and genres
+- Structured logging with Serilog
+- API documentation with Swagger
 
-```bash
-cd .\src\Web\
-dotnet watch run
-```
+## Prerequisites
 
-Navigate to https://localhost:5001. The application will automatically reload if you change any of the source files.
+Before you can run the application, you need to have the following software installed on your machine:
 
-## Code Styles & Formatting
+- .NET 8.0 SDK
+- SQL Server (or Docker to run SQL Server in a container)
 
-The template includes [EditorConfig](https://editorconfig.org/) support to help maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs. The **.editorconfig** file defines the coding styles applicable to this solution.
+## Running the Database
 
-## Code Scaffolding
-
-The template includes support to scaffold new commands and queries.
-
-Start in the `.\src\Application\` folder.
-
-Create a new command:
-
-```
-dotnet new ca-usecase --name CreateTodoList --feature-name TodoLists --usecase-type command --return-type int
-```
-
-Create a new query:
-
-```
-dotnet new ca-usecase -n GetTodos -fn TodoLists -ut query -rt TodosVm
-```
-
-If you encounter the error *"No templates or subcommands found matching: 'ca-usecase'."*, install the template and try again:
+The database for this application runs in SQL Server. You can use a local SQL Server instance or run it in a Docker container:
 
 ```bash
-dotnet new install Clean.Architecture.Solution.Template::8.0.5
+docker-compose up
 ```
 
-## Test
+## Building and Running the Application
 
-The solution contains unit, integration, and functional tests.
+Once you have set up your environment, follow these steps to build and run the application:
 
-To run the tests:
+1. **Clone the repository**:
+
+```bash
+git clone https://github.com/Oriel9511/LibraryApp.git
+cd LibraryApp
+```
+
+2. **Build the application**:
+
+```bash
+dotnet build -tl
+```
+
+3. **Run the tests**:
+
 ```bash
 dotnet test
 ```
 
-## Help
-To learn more about the template go to the [project website](https://github.com/jasontaylordev/CleanArchitecture). Here you can find additional guidance, request new features, report a bug, and discuss the template with other users.
+4. **Apply database migrations**:
+
+```bash
+cd src/Web
+dotnet ef database update
+```
+
+5. **Run the application**:
+
+```bash
+dotnet watch run
+```
+
+After running the application, you should see output indicating that the application is running. The API will be available at https://localhost:5001.
+
+## Accessing the API Documentation
+
+Once the application is running, you can access the API documentation by opening a web browser and navigating to https://localhost:5001/swagger/index.html.
+
+## Application Structure
+
+The application follows Clean Architecture principles and is organized into the following layers:
+
+- **Domain**: Contains the core business entities and logic
+- **Application**: Contains application business rules and use cases
+- **Infrastructure**: Contains implementation details for persistence, identity, and external services
+- **Web**: Contains the API controllers and configuration
+
+## Entity Model
+
+The application manages the following entities:
+
+- **Books**: Contains information about books including title, resume, publication year, ISBN, and stock
+- **Authors**: Contains information about authors including name, nationality, and birthday
+- **Genres**: Contains information about book genres including name and description
+- **Users**: Manages user authentication and authorization
+
+## API Endpoints
+
+The API provides endpoints for:
+
+- User registration and authentication
+- Book management (create, read, update, delete)
+- Author management
+- Genre management
+- Book searching and filtering
+
+## Logging
+
+The application uses Serilog for structured logging to track important operations and potential issues.
+
+## Security
+
+The API implements JWT-based authentication to secure endpoints and ensure that only authorized users can perform certain operations.
+
+## Additional Information
+
+For more detailed information about the API endpoints and data models, please refer to the Swagger documentation available when running the application.
