@@ -16,6 +16,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<Author> Authors => Set<Author>();
     
     public DbSet<Genre> Genres => Set<Genre>();
+    
+    public DbSet<Loan> Loans => Set<Loan>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

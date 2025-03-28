@@ -9,6 +9,8 @@ public interface IApplicationDbContext
     DbSet<Book> Books { get; }
     
     DbSet<Domain.Entities.Genre> Genres { get; }
+    
+    DbSet<Loan> Loans { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -12,4 +12,6 @@ public class Book : BaseAuditableEntity
     public int Stock { get; set; }
     public Author? Author { get; set; }
     public Genre? Genre { get; set; }
+    
+    public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
 }

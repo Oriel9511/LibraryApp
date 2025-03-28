@@ -1,4 +1,5 @@
 ﻿using LibraryApp.Application.Common.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace LibraryApp.Application.Common.Interfaces;
 
@@ -13,4 +14,6 @@ public interface IIdentityService
     Task<string?> CreateUserAsync(string userName, string password);
 
     Task<Result> DeleteUserAsync(string userId);
+    
+    IQueryable<UserDto> GetUsersAsQueryable();
 }

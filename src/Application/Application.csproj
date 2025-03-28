@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Books\" />
+    <Folder Include="Loans\Commands\" />
   </ItemGroup>
 
 </Project>
