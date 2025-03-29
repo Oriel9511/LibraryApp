@@ -547,6 +547,42 @@
             "JWT": []
           }
         ]
+      },
+      "post": {
+        "tags": [
+          "Loans"
+        ],
+        "operationId": "CreateLoan",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLoanCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/Users/GetJwt": {
@@ -1119,6 +1155,20 @@
           "returnDate": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "CreateLoanCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

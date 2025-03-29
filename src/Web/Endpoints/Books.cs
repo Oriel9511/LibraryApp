@@ -4,6 +4,7 @@ using LibraryApp.Application.Books.Commands.DeleteBook;
 using LibraryApp.Application.Books.Commands.UpdateBook;
 using LibraryApp.Application.Books.Queries.GetBooksWithPagination;
 using LibraryApp.Application.Common.Models.Books;
+using LibraryApp.Domain.Constants;
 
 namespace LibraryApp.Web.Endpoints;
 
@@ -16,7 +17,9 @@ public class Books : EndpointGroupBase
             .MapGet(GetBooksWithPagination)
             .MapGet(GetFilteredBooks, "filter")
             .MapPost(CreateBook)
-            .MapPut(UpdateBook, "{id}")
+            .MapPut(UpdateBook, "{id}");
+        app.MapGroup(this)
+            .RequireAuthorization(Policies.CanPurge)
             .MapDelete(DeleteBook, "{id}");
     }
 

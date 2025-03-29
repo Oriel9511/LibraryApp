@@ -15,9 +15,6 @@ public class LoansConfiguration : IEntityTypeConfiguration<Loan>
         builder.Property(l => l.LoanDate)
             .IsRequired();
 
-        builder.Property(l => l.ReturnDate)
-            .IsRequired();
-
         builder.HasOne(l => l.Book)
             .WithMany(b => b.Loans)
             .HasForeignKey(l => l.BookId)

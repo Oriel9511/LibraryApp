@@ -1,4 +1,6 @@
 ﻿using LibraryApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace LibraryApp.Application.Common.Interfaces;
 
@@ -13,4 +15,6 @@ public interface IApplicationDbContext
     DbSet<Loan> Loans { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    
+    DatabaseFacade Database { get; }
 }

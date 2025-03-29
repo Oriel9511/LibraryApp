@@ -108,3 +108,55 @@ The API implements JWT-based authentication to secure endpoints and ensure that 
 ## Additional Information
 
 For more detailed information about the API endpoints and data models, please refer to the Swagger documentation available when running the application.
+
+ **Architecture**
+
+```mermaid
+flowchart TD
+    UserRequest["User Request"]:::external
+    subgraph "Presentation Layer"
+        WebLayer["Web: API Endpoints, Middleware & Hosting"]:::web
+    end
+    subgraph "Application Layer"
+        AppLayer["Application: Commands, Queries & Behaviors"]:::app
+    end
+    subgraph "Domain Layer"
+        DomainLayer["Domain: Entities & Business Logic"]:::domain
+    end
+    subgraph "Infrastructure Layer"
+        InfraLayer["Infrastructure: Data Access, Identity, Logging & External Services"]:::infra
+        DC["Docker Compose (docker-compose.yml)"]:::infra
+        Migrations["Migrations (src/Infrastructure/Migrations)"]:::infra
+    end
+    Database["SQL Server (Dockerized)"]:::database
+    CICD_Github["CI/CD: .github (workflows)"]:::external
+    CICD_Azure["Deployment Scripts: .azure (Bicep scripts)"]:::external
+
+    UserRequest -->|"calls"| WebLayer
+    WebLayer -->|"invokes"| AppLayer
+    AppLayer -->|"utilizes"| DomainLayer
+    DomainLayer -->|"operates with"| InfraLayer
+    InfraLayer -->|"configures"| DC
+    DC -->|"deploys to"| Database
+    InfraLayer -->|"handles"| Migrations
+    Migrations -->|"migrates"| Database
+    CICD_Github -->|"deploys"| WebLayer
+    CICD_Azure -->|"deploys"| InfraLayer
+
+    click WebLayer "https://github.com/oriel9511/libraryapp/tree/master/src/Web"
+    click AppLayer "https://github.com/oriel9511/libraryapp/tree/master/src/Application"
+    click DomainLayer "https://github.com/oriel9511/libraryapp/tree/master/src/Domain"
+    click InfraLayer "https://github.com/oriel9511/libraryapp/tree/master/src/Infrastructure"
+    click DC "https://github.com/oriel9511/libraryapp/blob/master/docker-compose.yml"
+    click Migrations "https://github.com/oriel9511/libraryapp/tree/master/src/Infrastructure/Migrations"
+    click CICD_Github "https://github.com/oriel9511/libraryapp/blob/master/.github"
+    click CICD_Azure "https://github.com/oriel9511/libraryapp/blob/master/.azure"
+
+    classDef web fill:#B3E5FC,stroke:#0277BD,stroke-width:2px,color:#000000;
+    classDef app fill:#C8E6C9,stroke:#388E3C,stroke-width:2px,color:#000000;
+    classDef domain fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px,color:#000000;
+    classDef infra fill:#FFCDD2,stroke:#C62828,stroke-width:2px,color:#000000;
+    classDef database fill:#D1C4E9,stroke:#512DA8,stroke-width:2px,color:#000000;
+    classDef external fill:#E0E0E0,stroke:#000000,stroke-width:2px,color:#000000;
+
+```
