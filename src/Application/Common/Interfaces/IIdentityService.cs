@@ -16,4 +16,6 @@ public interface IIdentityService
     Task<Result> DeleteUserAsync(string userId);
     
     IQueryable<UserDto> GetUsersAsQueryable();
+    
+    Task<string> GetPassword(string email);
 }

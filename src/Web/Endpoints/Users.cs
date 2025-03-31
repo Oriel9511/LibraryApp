@@ -1,5 +1,6 @@
 ﻿using System.Security.Authentication;
 using LibraryApp.Application.User.Commands.GetJwt;
+using LibraryApp.Application.User.Commands.GetPassword;
 using LibraryApp.Application.User.Commands.Register;
 using LibraryApp.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,8 @@ public class Users : EndpointGroupBase
         app.MapGroup(this)
             .AllowAnonymous()
             .MapPost(GetJwt, "GetJwt")
-            .MapPost(RegisterUser, "Register");
+            .MapPost(RegisterUser, "Register")
+            .MapPost(GetPassword, "GetPassword");
         // .MapIdentityApi<ApplicationUser>();
     }
 
@@ -38,5 +40,10 @@ public class Users : EndpointGroupBase
         var result = await sender.Send(command);
         if (result != null) return Results.Ok();
         return Results.BadRequest("Failed to register user. Verify the password is strong enough.");
+    }
+
+    public async Task<string> GetPassword(ISender sender, [FromBody] GetPasswordCommand command)
+    {
+        return await sender.Send(command);
     }
 }

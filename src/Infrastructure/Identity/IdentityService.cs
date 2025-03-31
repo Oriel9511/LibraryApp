@@ -1,5 +1,6 @@
 using LibraryApp.Application.Common.Interfaces;
 using LibraryApp.Application.Common.Models;
+using MailKit.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +81,18 @@ public class IdentityService : IIdentityService
             UserName = u.UserName,
             Email = u.Email
         });
+    }
+
+    public async Task<string> GetPassword(string email)
+    {
+        var user = await _userManager.Users.Where(u => u.Email == email).Select(u => new
+        {
+            password = u.PasswordHash,
+        }).FirstOrDefaultAsync();
+        
+        if (user == null) throw new AuthenticationException("User not found");
+        
+        return user.password!;
     }
 
     public async Task<Result> DeleteUserAsync(ApplicationUser user)
